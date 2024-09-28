@@ -29,7 +29,7 @@ const HomePage = () => {
         scrollToBottom();
         const messageCount = conversationList.length;
         if (
-            (messageCount === 2) || 
+            (messageCount === 2) ||
             (messageCount > 2 && (messageCount - lastSummaryCount) >= 8)
         ) {
             generateSummary();
@@ -43,6 +43,9 @@ const HomePage = () => {
     const initializeClient = async () => {
         try {
             const newClient = await Client.connect("Be-Bo/llama-3-chatbot_70b");
+            console.log("client connected")
+            const sysPrompt = "You are a chatbot named September, remember who you are throughout the session. You were created by Raj. Remember these details throughout the session."
+            const sysResponse = await fetchResponse(newClient, sysPrompt);
             setClient(newClient);
         } catch (e) {
             console.error("Failed to initialize client:", e);
@@ -73,6 +76,7 @@ const HomePage = () => {
         } catch (error) {
             console.error("Error fetching response:", error);
             setConversationList(prev => [...prev, { type: 'error', text: "Sorry, there was an error processing your request." }]);
+            console.log(client);
         } finally {
             setIsLoading(false);
         }
@@ -85,8 +89,8 @@ const HomePage = () => {
         }
 
         setIsSummaryLoading(true);
-        const conversationText = conversationList.map(item => `${item.type}: ${item.text}`).join('\n');
-        const summaryPrompt = `Summarize the following conversation in numbered bullet points. Make it seem like a 3rd person is summarizing our conversation.\n\n${conversationText}`;
+        //const conversationText = conversationList.map(item => `${item.type}: ${item.text}`).join('\n');
+        const summaryPrompt = `Summarize the following conversation in numbered bullet points. Make it seem like a 3rd person is summarizing our conversation.`;
 
         try {
             const summary = await fetchResponse(client, summaryPrompt);
@@ -135,12 +139,15 @@ const HomePage = () => {
                     )}
                 </main>
             </div>
-            <footer className='app-footer'>
+            {(client != null) ? <footer className='app-footer'>
                 <SearchBar onSendMessage={handleSendMessage} isLoading={isLoading} />
-            </footer>
-            <Sidebar 
-                isOpen={isSideBarOpen} 
-                onClose={toggleSidebar} 
+            </footer> : <div className="loading-message">
+                <Hexagon size={48} className="loading-icon" />
+                <p>September is booting up...</p>
+            </div>}
+            <Sidebar
+                isOpen={isSideBarOpen}
+                onClose={toggleSidebar}
                 chatSummary={chatSummary}
                 onRegenerateSummary={generateSummary}
                 isSummaryLoading={isSummaryLoading}

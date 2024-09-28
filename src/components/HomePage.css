@@ -139,3 +139,7 @@
     align-self: center;
     text-align: center;
 }
+
+.loading-message{
+    color: #CDFA89;
+}
