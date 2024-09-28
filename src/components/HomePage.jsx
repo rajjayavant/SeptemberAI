@@ -17,7 +17,6 @@ const HomePage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [chatSummary, setChatSummary] = useState('');
     const [isSummaryLoading, setIsSummaryLoading] = useState(false);
-    const [lastSummaryCount, setLastSummaryCount] = useState(0);
     const [hasSidebarEverOpened, setHasSidebarEverOpened] = useState(false);
     const messagesEndRef = useRef(null);
 
@@ -28,10 +27,7 @@ const HomePage = () => {
     useEffect(() => {
         scrollToBottom();
         const messageCount = conversationList.length;
-        if (
-            (messageCount === 2) ||
-            (messageCount > 2 && (messageCount - lastSummaryCount) >= 8)
-        ) {
+        if ( messageCount === 2 ) {
             generateSummary();
         }
     }, [conversationList]);
@@ -44,7 +40,7 @@ const HomePage = () => {
         try {
             const newClient = await Client.connect("Be-Bo/llama-3-chatbot_70b");
             console.log("client connected")
-            const sysPrompt = "You are a chatbot named September, remember who you are throughout the session. You were created by Raj. Remember these details throughout the session."
+            const sysPrompt = "You are a chatbot named September, remember who you are throughout the session."
             const sysResponse = await fetchResponse(newClient, sysPrompt);
             setClient(newClient);
         } catch (e) {
@@ -89,13 +85,12 @@ const HomePage = () => {
         }
 
         setIsSummaryLoading(true);
-        //const conversationText = conversationList.map(item => `${item.type}: ${item.text}`).join('\n');
-        const summaryPrompt = `Summarize the following conversation in numbered bullet points. Make it seem like a 3rd person is summarizing our conversation.`;
+
+        const summaryPrompt = 'Summarize the conversation in numbered bullet points. Please dont include the first from prompt where you were told to be called September. Make it seem like a 3rd person is summarizing our conversation.';
 
         try {
             const summary = await fetchResponse(client, summaryPrompt);
             setChatSummary(summary);
-            setLastSummaryCount(conversationList.length);
         } catch (error) {
             console.error("Error generating summary:", error);
             setChatSummary("Failed to generate summary. Please try again.");

@@ -113,15 +113,21 @@
 }
 
 .message.user {
-    background-color: #3d7979f1;
+    background-color: #044033;
+    color: white;
     align-self: flex-end;
+    border-radius: 25px;
 }
 
 .message.bot {
-    background-color: #cdf0f0;
+    background-color: transparent;
+    color: white;
+    border: 1px solid #CDFA89;
     align-self: flex-start;
     display: flex;
     align-items: flex-start;
+    padding: 10px;
+    border-radius: 25px;
 }
 
 .bot-icon {
