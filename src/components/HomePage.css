@@ -1,0 +1,141 @@
+.app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; 
+    background-color: #002E24;
+    overflow-x: hidden; /* Prevent horizontal scrollbar */
+}
+
+.app-header {
+    height: 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #002E24;
+    
+}
+
+.logo {
+    position: fixed;
+    top: 0; 
+    left: 0vw; 
+    width: 12.64vw; 
+    height: 1.56vh; 
+}
+
+.toggle-btn {
+    position: fixed;
+    top: 3.3vh;  
+    right: 6.32vw;  
+    width: auto; 
+    height: 3.0vh; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.toggle-icon {
+    height: 100%;
+    width: 100%;
+}
+
+.app-body {
+    display: flex;
+    flex: 1;
+    margin-top: 5%;
+    margin-bottom: 60px;
+    transition: margin-right 0.3s ease;
+}
+
+.sidebar-open .app-body {
+    margin-right: 250px;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.watermark {
+    height: 23vh;
+    width: auto;
+}
+
+.app-footer {
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px 20px 20px;
+    transition: right 0.3s ease;
+    backdrop-filter: blur(3px);
+    transition: backdrop-filter 0.5s ease;
+}
+
+.sidebar-open .app-footer {
+    right: 250px;
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.messages-container {
+    margin: 8vh 0;
+    padding-bottom: 0.1%;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    max-width: 70%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    line-height: 1.4;
+}
+
+.message.user {
+    background-color: #3d7979f1;
+    align-self: flex-end;
+}
+
+.message.bot {
+    background-color: #cdf0f0;
+    align-self: flex-start;
+    display: flex;
+    align-items: flex-start;
+}
+
+.bot-icon {
+    margin-right: 10px;
+    min-width: 24px;
+}
+
+.message-text {
+    word-wrap: break-word;
+    text-align: left;
+}
+
+.error {
+    background-color: #660000;
+    align-self: center;
+    text-align: center;
+}
